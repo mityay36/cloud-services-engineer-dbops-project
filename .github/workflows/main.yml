@@ -25,15 +25,15 @@ jobs:
 
       # Проверяем, что Postgres работает и доступен перед выполнением миграций, чтобы избежать ошибок подключения
     - name: Wait for Postgres
-      run: until pg_isready -h 158.160.122.92 -p 5432; do sleep 1; done
+      run: until pg_isready -h ${{ secrets.DB_HOST }} -p ${{ secrets.DB_PORT }}; do sleep 1; done
 
       # Выполняем миграции с помощью Flyway, используя URL подключения и учётные данные для базы данных
     - name: Run Flyway migrations
       env:
-        FLYWAY_URL: "jdbc:postgresql://158.160.122.92:5432/store"
-        FLYWAY_USER: user1
-        FLYWAY_PASSWORD: user1
-      run: flyway -host=158.160.122.92 -validateMigrationNaming=true migrate -locations=filesystem:migrations
+        FLYWAY_URL: "jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}"
+        FLYWAY_USER: ${{ secrets.DB_USER }}
+        FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      run: flyway -validateMigrationNaming=true migrate -locations=filesystem:migrations
 
       ### Этот шаг оставьте без изменений
     - name: Download and setup autotests binaries
