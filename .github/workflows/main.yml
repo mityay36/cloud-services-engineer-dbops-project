@@ -33,7 +33,7 @@ jobs:
         FLYWAY_URL: "jdbc:postgresql://158.160.122.92:5432/store"
         FLYWAY_USER: user1
         FLYWAY_PASSWORD: user1
-      run: flyway -validateMigrationNaming=true migrate -locations=filesystem:migrations
+      run: flyway -host=158.160.122.92 -validateMigrationNaming=true migrate -locations=filesystem:migrations
 
       ### Этот шаг оставьте без изменений
     - name: Download and setup autotests binaries
