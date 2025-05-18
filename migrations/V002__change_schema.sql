@@ -16,6 +16,9 @@ WHERE o.id = od.order_id;
 
 DROP TABLE orders_date;
 
+ALTER TABLE orders ADD PRIMARY KEY (id);
+ALTER TABLE product ADD PRIMARY KEY (id);
+
 ALTER TABLE order_product
 ADD CONSTRAINT fk_order_product_order_id
 FOREIGN KEY (order_id) REFERENCES orders(id);
